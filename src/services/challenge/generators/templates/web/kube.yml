@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctf-{{NAME_SLUG}}
+  labels:
+    role: chal
+    category: {{CATEGORY}}
+    challenge: {{NAME_SLUG}}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      role: chal
+      category: {{CATEGORY}}
+      challenge: {{NAME_SLUG}}
+  template:
+    metadata:
+      labels:
+        role: chal
+        category: {{CATEGORY}}
+        challenge: {{NAME_SLUG}}
+    spec:
+      enableServiceLinks: false
+      automountServiceAccountToken: false
+      containers:
+      - name: web
+        image: {{IMAGE}}
+        resources: # Resource limits for the container. These are important, in case people manage to max out CPU/RAM on your challenge
+          limits:
+            cpu: {{LIMIT_CPU}}
+            memory: {{LIMIT_MEM}}
+          requests:
+            cpu: {{LIMIT_RCPU}}
+            memory: {{LIMIT_RMEM}}
+        ports:
+        - containerPort: {{PORT}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ctf-{{NAME}}
+  labels:
+    role: chal
+    category: {{CATEGORY}}
+    challenge: {{NAME_SLUG}}
+spec:
+  selector:
+    role: chal
+    category: {{CATEGORY}}
+    challenge: {{NAME_SLUG}}
+  ports:
+    - port: {{PORT}}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-ctf-{{NAME}}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/session-cookie-name: lb-session
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: auth-ctf-prerelease
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - DownUnderCTF"
+spec:
+  tls:
+    - hosts:
+      - {{NAME_SLUG}}.chal-2021.duc.tf
+  rules:
+  - host: {{NAME_SLUG}}.chal-2021.duc.tf
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ctf-{{NAME_SLUG}}
+            port:
+              number: 8080

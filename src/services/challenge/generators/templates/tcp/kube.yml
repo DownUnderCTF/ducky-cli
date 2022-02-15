@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctf-{{NAME}}
+  labels:
+    category: {{CATEGORY}}
+    challenge: {{NAME_SLUG}}
+    role: chal
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      category: {{CATEGORY}}
+      challenge: {{NAME_SLUG}}
+      role: chal
+  template:
+    metadata:
+      labels:
+        category: {{CATEGORY}}
+        challenge: {{NAME_SLUG}}
+        role: chal
+    spec:
+      enableServiceLinks: false
+      automountServiceAccountToken: false
+      containers:
+      - name: chal
+        image: {{IMAGE}}
+        env:
+        - name: MAX_CONNS_PER_IP
+          value: "64"
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1024Mi
+          requests:
+            cpu: 50m
+            memory: 256Mi
+        securityContext:
+          privileged: true
+        ports:
+        - containerPort: 1337
+          name: port-1337
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ctf-{{NAME}}
+  labels:
+    category: {{CATEGORY}}
+    challenge: {{NAME_SLUG}}
+    role: chal
+spec:
+  type: NodePort
+  selector:
+    category: {{CATEGORY}}
+    challenge: {{NAME_SLUG}}
+    role: chal
+  ports:
+    - port: 1337
+      name: port-1337
+      targetPort: 1337
+      nodePort: {{PORT}}
