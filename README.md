@@ -3,6 +3,7 @@
 A helper tool for DownunderCTF challenge creation and management.
 
 <!-- toc -->
+* [ducky-cli](#ducky-cli)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
@@ -24,6 +25,7 @@ USAGE
 
 # Commands
 <!-- commands -->
+* [`ducky challenge init`](#ducky-challenge-init)
 * [`ducky help [COMMAND]`](#ducky-help-command)
 * [`ducky plugins`](#ducky-plugins)
 * [`ducky plugins:inspect PLUGIN...`](#ducky-pluginsinspect-plugin)
@@ -31,6 +33,32 @@ USAGE
 * [`ducky plugins:link PLUGIN`](#ducky-pluginslink-plugin)
 * [`ducky plugins:uninstall PLUGIN...`](#ducky-pluginsuninstall-plugin)
 * [`ducky plugins update`](#ducky-plugins-update)
+
+## `ducky challenge init`
+
+Bootstrap and initialize a challenge
+
+```
+USAGE
+  $ ducky challenge init [-c cloud|crypto|forensics|misc|osint|pwn|rev|web] [-n <value>] [-a <value>] [-d
+    easy|medium|hard] [-t none|tcp|http] [-D <value>] [-T <value>]
+
+FLAGS
+  -D, --dir=<value>                                               [default: /home/ubuntu/contrib/ducky-cli/] Root
+                                                                  challenge repository directory
+  -T, --template=<value>                                          [default: /home/ubuntu/contrib/ducky-cli/.template]
+                                                                  Directory to use as a template
+  -a, --author=<value>                                            [default: anonymous] Handle or name of challenge
+                                                                  author
+  -c, --category=(cloud|crypto|forensics|misc|osint|pwn|rev|web)  Challenge category
+  -d, --difficulty=(easy|medium|hard)                             Challenge difficulty
+  -n, --name=<value>                                              Challenge name
+  -t, --type=(none|tcp|http)                                      [default: http] Type of hosting required (none -
+                                                                  description only, tcp, http)
+
+DESCRIPTION
+  Bootstrap and initialize a challenge
+```
 
 ## `ducky help [COMMAND]`
 
@@ -50,7 +78,7 @@ DESCRIPTION
   Display help for ducky.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.10/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.9/src/commands/help.ts)_
 
 ## `ducky plugins`
 

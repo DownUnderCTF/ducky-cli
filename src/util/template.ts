@@ -1,10 +1,8 @@
-import {PathLike} from "fs";
-import * as fs from 'node:fs/promises';
+import { PathLike } from "fs";
+import * as fs from "node:fs/promises";
 
-import * as handlebars from 'handlebars';
+import * as handlebars from "handlebars";
 
 export async function templateFile(path: PathLike, context: unknown = {}): Promise<string> {
-    return handlebars.compile(
-        (await fs.readFile(path)).toString()
-    )(context);
+    return handlebars.compile(await fs.readFile(path, 'utf-8'))(context);
 }
