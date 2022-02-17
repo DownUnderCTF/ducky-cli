@@ -28,18 +28,18 @@ export async function inquiredParse(
     this: Command,
     cmd: InquiredCommand
 ): Promise<ParserOutput<any, { [name: string]: any }>> {
-    const flags = await this.parse(cmd);
+    const opts = await this.parse(cmd);
     const parsed = await inquirer.prompt(
         Object.entries(cmd.inquiredFlags).map(([k, v]) => ({
             name: k,
             ...getBaseOptions(cmd.flags[k]),
             ...v,
         })),
-        flags
+        opts.flags,
     );
 
     return {
-        ...flags,
-        flags: { ...flags.flags, ...parsed },
+        ...opts,
+        flags: { ...opts.flags, ...parsed },
     };
 }
