@@ -1,7 +1,7 @@
 {
   "name": "ducky-cli",
   "description": "A CLI helper for ductf",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "uint0",
   "bin": {
     "ducky": "./bin/run"
@@ -84,5 +84,9 @@
     "version": "oclif readme && git add README.md",
     "pkg-all": "yarn build && pkg --targets node16-linuxstatic,node16-linux,node16-macos,node16-win --compress GZip --out-path distbin/ ."
   },
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "pkg": {
+    "scripts": ["dist/**/*.js"],
+    "assets": ["oclif.manifest.json"]
+  }
 }

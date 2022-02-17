@@ -15,7 +15,7 @@ $ npm install -g ducky-cli
 $ ducky COMMAND
 running command...
 $ ducky (--version)
-ducky-cli/0.0.0 linux-x64 node-v17.3.0
+ducky-cli/0.1.0 linux-x64 node-v17.3.0
 $ ducky --help [COMMAND]
 USAGE
   $ ducky COMMAND
@@ -44,9 +44,10 @@ USAGE
     easy|medium|hard] [-t none|tcp|http] [-D <value>] [-T <value>]
 
 FLAGS
-  -D, --dir=<value>                                               [default: /home/ubuntu/contrib/ducky-cli/] Root
+  -D, --dir=<value>                                               [default: /home/ubuntu/contrib/ducky-cli-pkg/] Root
                                                                   challenge repository directory
-  -T, --template=<value>                                          [default: /home/ubuntu/contrib/ducky-cli/.template]
+  -T, --template=<value>                                          [default:
+                                                                  /home/ubuntu/contrib/ducky-cli-pkg/.template]
                                                                   Directory to use as a template
   -a, --author=<value>                                            [default: anonymous] Handle or name of challenge
                                                                   author
@@ -78,7 +79,7 @@ DESCRIPTION
   Display help for ducky.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.9/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.11/src/commands/help.ts)_
 
 ## `ducky plugins`
 
@@ -98,7 +99,7 @@ EXAMPLES
   $ ducky plugins
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.11/src/commands/plugins/index.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.1.0/src/commands/plugins/index.ts)_
 
 ## `ducky plugins:inspect PLUGIN...`
 
