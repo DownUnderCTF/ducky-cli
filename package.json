@@ -1,7 +1,7 @@
 {
   "name": "ducky-cli",
   "description": "A CLI helper for ductf",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "uint0",
   "bin": {
     "ducky": "./bin/run"
