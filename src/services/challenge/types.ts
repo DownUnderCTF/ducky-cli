@@ -17,7 +17,7 @@ export type ChallengeCategory = typeof CHALLENGE_CATEGORIES[number];
 export type ChallengeDifficulty = typeof CHALLENGE_DIFFICULTIES[number];
 export type ChallengeHostingType = typeof CHALLENGE_HOSTING_TYPE[number];
 
-export type ChallengeSetupDescriptor = {
+export type ChallengeSetupInfo = {
     id: string;
     name: string;
     category: ChallengeCategory;
@@ -25,4 +25,16 @@ export type ChallengeSetupDescriptor = {
     difficulty: ChallengeDifficulty;
     hostingType: ChallengeHostingType;
     tags: string[];
+};
+
+export type ChallengeDescriptor = {
+    version: '0.1',
+    id: string,
+    name: string,
+    category: ChallengeCategory,
+    description: string,
+    connection_info?: string,
+    tags: string[],
+    files?: string[],
+    flags: string[],
 };

@@ -5,7 +5,7 @@ import * as fs from "fs-extra";
 import * as klaw from "klaw";
 import log from "loglevel";
 
-import { ChallengeSetupDescriptor } from "../types";
+import { ChallengeSetupInfo } from "../types";
 import { templateFile } from "../../../util/template";
 
 /**
@@ -17,7 +17,7 @@ export default class TemplateGenerator {
     constructor(
         private readonly templateDir: string,
         private readonly targetDir: string,
-        private readonly challengeContext: ChallengeSetupDescriptor
+        private readonly challengeContext: ChallengeSetupInfo
     ) {}
 
     async generate(): Promise<void> {

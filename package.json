@@ -11,6 +11,7 @@
     "@oclif/core": "^1",
     "@oclif/plugin-help": "^5",
     "@oclif/plugin-plugins": "^2.0.1",
+    "chalk": "^4",
     "fs-extra": "^10.0.0",
     "handlebars": "^4.7.7",
     "inquirer": "^8.2.0",
@@ -86,7 +87,11 @@
   },
   "types": "dist/index.d.ts",
   "pkg": {
-    "scripts": ["dist/**/*.js"],
-    "assets": ["oclif.manifest.json"]
+    "scripts": [
+      "dist/**/*.js"
+    ],
+    "assets": [
+      "oclif.manifest.json"
+    ]
   }
 }
