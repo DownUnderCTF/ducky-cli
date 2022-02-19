@@ -11,11 +11,11 @@ A helper tool for DownunderCTF challenge creation and management.
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g ducky-cli
+$ npm install -g @downunderctf/ducky
 $ ducky COMMAND
 running command...
 $ ducky (--version)
-ducky-cli/0.1.0 linux-x64 node-v17.3.0
+@downunderctf/ducky/0.2.0 linux-x64 node-v17.3.0
 $ ducky --help [COMMAND]
 USAGE
   $ ducky COMMAND
@@ -25,8 +25,6 @@ USAGE
 
 # Commands
 <!-- commands -->
-* [`ducky challenge init`](#ducky-challenge-init)
-* [`ducky challenge lint`](#ducky-challenge-lint)
 * [`ducky help [COMMAND]`](#ducky-help-command)
 * [`ducky plugins`](#ducky-plugins)
 * [`ducky plugins:inspect PLUGIN...`](#ducky-pluginsinspect-plugin)
@@ -34,50 +32,6 @@ USAGE
 * [`ducky plugins:link PLUGIN`](#ducky-pluginslink-plugin)
 * [`ducky plugins:uninstall PLUGIN...`](#ducky-pluginsuninstall-plugin)
 * [`ducky plugins update`](#ducky-plugins-update)
-
-## `ducky challenge init`
-
-Bootstrap and initialize a challenge
-
-```
-USAGE
-  $ ducky challenge init [-c cloud|crypto|forensics|misc|osint|pwn|rev|web] [-n <value>] [-a <value>] [-d
-    easy|medium|hard] [-t none|tcp|http] [-D <value>] [-T <value>]
-
-FLAGS
-  -D, --dir=<value>                                               [default: /home/ubuntu/contrib/ducky-cli/] Root
-                                                                  challenge repository directory
-  -T, --template=<value>                                          [default: /home/ubuntu/contrib/ducky-cli/.template]
-                                                                  Directory to use as a template
-  -a, --author=<value>                                            [default: anonymous] Handle or name of challenge
-                                                                  author
-  -c, --category=(cloud|crypto|forensics|misc|osint|pwn|rev|web)  Challenge category
-  -d, --difficulty=(easy|medium|hard)                             Challenge difficulty
-  -n, --name=<value>                                              Challenge name
-  -t, --type=(none|tcp|http)                                      [default: http] Type of hosting required (none -
-                                                                  description only, tcp, http)
-
-DESCRIPTION
-  Bootstrap and initialize a challenge
-```
-
-## `ducky challenge lint`
-
-Lint a challenge for misconfigurations
-
-```
-USAGE
-  $ ducky challenge lint [-I <value>] [-D <value>] [--verbose] [--format text|json]
-
-FLAGS
-  -D, --directory=<value>  [default: ./] Challenge directory to lint
-  -I, --ignore=<value>     Comma separated list of rule ids to ignore
-  --format=(text|json)     [default: text] Output Format
-  --verbose                Verbose mode
-
-DESCRIPTION
-  Lint a challenge for misconfigurations
-```
 
 ## `ducky help [COMMAND]`
 
@@ -97,7 +51,7 @@ DESCRIPTION
   Display help for ducky.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.9/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.11/src/commands/help.ts)_
 
 ## `ducky plugins`
 
