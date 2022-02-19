@@ -1,10 +1,10 @@
 import * as path from 'node:path';
 
 import * as fs from 'fs-extra';
-import * as klaw from 'klaw';
 
 import { getCtfcliSpec, hasArtifact } from './helpers';
 import { CHALLENGE_CATEGORIES } from '../types';
+import { ignoreWalk } from '../../../util/fsutil';
 
 export type RuleLevel = 'notice' | 'warning' | 'error' | 'fatal';
 export type RuleDefinition = {
@@ -80,13 +80,7 @@ async function S003(challengeDir: string): Promise<string | null> {
 }
 
 async function S004(challengeDir: string): Promise<string | null> {
-    const toDelete = [];
-    for await (const file of klaw(challengeDir)) {
-        if(file.path.includes('DELETEME')) {
-            toDelete.push(file.path);
-        }
-    }
-
+    const toDelete = (await ignoreWalk(challengeDir)).filter(fpath => fpath.includes('DELETEME'));
     return toDelete.length === 0 ? null : 'Found DELETEME(s): ' + toDelete.join(', ');
 }
 

@@ -2,11 +2,11 @@ import * as path from "node:path";
 import * as os from "node:os";
 
 import * as fs from "fs-extra";
-import * as klaw from "klaw";
 import log from "loglevel";
 
 import { ChallengeSetupInfo } from "../types";
 import { templateFile } from "../../../util/template";
+import { ignoreWalk } from "../../../util/fsutil";
 
 /**
  * Generates a challenge template from a well-known location
@@ -29,17 +29,18 @@ export default class TemplateGenerator {
         await fs.copy(this.templateDir, tmpDir);
         log.debug("Using working directory", tmpDir);
 
-        for await (const file of klaw(tmpDir)) {
-            if (file.stats.isFile() && file.path.endsWith(this.templateExtension)) {
-                log.debug("Processing template file", file.path);
+        await Promise.all((await ignoreWalk(tmpDir)).map(async file => {
+            const stat = await fs.lstat(file);
+            if (stat.isFile() && file.endsWith(this.templateExtension)) {
+                log.debug("Processing template file", file);
 
-                const resultantFilePath = file.path.slice(0, -this.templateExtension.length);
-                await fs.writeFile(resultantFilePath, await templateFile(file.path, this.challengeContext));
+                const resultantFilePath = file.slice(0, -this.templateExtension.length);
+                await fs.writeFile(resultantFilePath, await templateFile(file, this.challengeContext));
 
-                log.debug("Generated", resultantFilePath, "and removing", file.path);
-                await fs.remove(file.path);
+                log.debug("Generated", resultantFilePath, "and removing", file);
+                await fs.remove(file);
             }
-        }
+        }));
 
         log.debug("Finalizing template", this.targetDir);
         await fs.move(tmpDir, this.targetDir);

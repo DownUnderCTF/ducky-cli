@@ -1,5 +1,6 @@
 import * as path from "node:path";
 
+import * as walk from "ignore-walk";
 import * as fs from "fs-extra";
 
 /**
@@ -29,4 +30,12 @@ export async function findUpRequired(name: string): Promise<string> {
     const up = await findUp(name);
     if (!up) throw new Error(`Could not find a ancestor path containing ${name}`);
     return up;
+}
+
+export async function ignoreWalk(root: string): Promise<string[]> {
+    return (await walk({
+        path: root,
+        ignoreFiles: ['.gitignore', '.ignore', '.duckyignore'],
+        includeEmpty: true,
+    })).filter(f => !f.startsWith(".git")).map(file => path.resolve(root, file));
 }

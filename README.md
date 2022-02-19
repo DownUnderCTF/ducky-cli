@@ -26,6 +26,7 @@ USAGE
 # Commands
 <!-- commands -->
 * [`ducky challenge init`](#ducky-challenge-init)
+* [`ducky challenge lint`](#ducky-challenge-lint)
 * [`ducky help [COMMAND]`](#ducky-help-command)
 * [`ducky plugins`](#ducky-plugins)
 * [`ducky plugins:inspect PLUGIN...`](#ducky-pluginsinspect-plugin)
@@ -44,10 +45,9 @@ USAGE
     easy|medium|hard] [-t none|tcp|http] [-D <value>] [-T <value>]
 
 FLAGS
-  -D, --dir=<value>                                               [default: /home/ubuntu/contrib/ducky-cli-pkg/] Root
+  -D, --dir=<value>                                               [default: /home/ubuntu/contrib/ducky-cli/] Root
                                                                   challenge repository directory
-  -T, --template=<value>                                          [default:
-                                                                  /home/ubuntu/contrib/ducky-cli-pkg/.template]
+  -T, --template=<value>                                          [default: /home/ubuntu/contrib/ducky-cli/.template]
                                                                   Directory to use as a template
   -a, --author=<value>                                            [default: anonymous] Handle or name of challenge
                                                                   author
@@ -59,6 +59,24 @@ FLAGS
 
 DESCRIPTION
   Bootstrap and initialize a challenge
+```
+
+## `ducky challenge lint`
+
+Lint a challenge for misconfigurations
+
+```
+USAGE
+  $ ducky challenge lint [-I <value>] [-D <value>] [--verbose] [--format text|json]
+
+FLAGS
+  -D, --directory=<value>  [default: ./] Challenge directory to lint
+  -I, --ignore=<value>     Comma separated list of rule ids to ignore
+  --format=(text|json)     [default: text] Output Format
+  --verbose                Verbose mode
+
+DESCRIPTION
+  Lint a challenge for misconfigurations
 ```
 
 ## `ducky help [COMMAND]`
@@ -79,7 +97,7 @@ DESCRIPTION
   Display help for ducky.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.11/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.9/src/commands/help.ts)_
 
 ## `ducky plugins`
 
