@@ -3,11 +3,11 @@ import * as path from 'node:path';
 import * as fs from 'fs-extra';
 import * as mockfs from 'mock-fs';
 import { expect, test } from '@oclif/test';
+import { mockOClifFS } from '../../helpers/fssetup';
 
 describe('challenge:init', () => {
-    beforeEach(() => {
-        mockfs();
-    });
+    beforeEach(() => { mockfs(); });
+    afterEach(mockfs.restore);
 
     const TEST_ID = 'test_challenge',
         TEST_CATEGORY = 'web',
@@ -17,12 +17,11 @@ describe('challenge:init', () => {
         TEST_HOSTING = 'http';
 
     test
-        .do(() => mockfs({
-            '.': mockfs.load(path.resolve(__dirname, '../../../')),
+        .do(() => mockOClifFS({
             '.template': {
                 'test.yml.tpl': '{{id}} {{name}} {{category}} {{author}} {{difficulty}}'
             },
-        }, {createCwd: false}))
+        }))
         .command([
             'challenge:init',
             '--id', TEST_ID,
@@ -43,12 +42,11 @@ describe('challenge:init', () => {
         });
     
     test
-        .do(() => mockfs({
-            '.': mockfs.load(path.resolve(__dirname, '../../../')),
+        .do(() => mockOClifFS({
             '.template': {
                 'unchanged.yml': '{{id}}',
             },
-        }, {createCwd: false}))
+        }))
         .command([
             'challenge:init',
             '--id', TEST_ID,
@@ -66,15 +64,14 @@ describe('challenge:init', () => {
         });
 
     test
-        .do(() => mockfs({
-            '.': mockfs.load(path.resolve(__dirname, '../../../')),
+        .do(() => mockOClifFS({
             '.template': {
                 'unchanged.yml': '{{id}}',
             },
             [TEST_CATEGORY]: {
                 [TEST_NAME]: {},
             }
-        }, {createCwd: false}))
+        }))
         .command([
             'challenge:init',
             '--id', TEST_ID,
@@ -86,6 +83,4 @@ describe('challenge:init', () => {
         ])
         .catch(err => expect(err.message).to.match(/already exists/))
         .it('refuses to overwrite existing paths');
-    
-    afterEach(mockfs.restore);
 });
