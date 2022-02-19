@@ -2,6 +2,7 @@ import * as path from "node:path";
 
 import * as walk from "ignore-walk";
 import * as fs from "fs-extra";
+import { IGNORE_FILES } from "../config";
 
 /**
  * Finds a parent directory containing a file path, returning the entire path
@@ -35,7 +36,7 @@ export async function findUpRequired(name: string): Promise<string> {
 export async function ignoreWalk(root: string): Promise<string[]> {
     return (await walk({
         path: root,
-        ignoreFiles: ['.gitignore', '.ignore', '.duckyignore'],
+        ignoreFiles: IGNORE_FILES,
         includeEmpty: true,
     })).filter(f => !f.startsWith(".git")).map(file => path.resolve(root, file));
 }

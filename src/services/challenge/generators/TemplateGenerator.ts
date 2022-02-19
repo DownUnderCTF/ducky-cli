@@ -7,13 +7,12 @@ import log from "loglevel";
 import { ChallengeSetupInfo } from "../types";
 import { templateFile } from "../../../util/template";
 import { ignoreWalk } from "../../../util/fsutil";
+import { TEMPLATE_FILE_EXTENSION } from "../../../config";
 
 /**
  * Generates a challenge template from a well-known location
  */
 export default class TemplateGenerator {
-    private readonly templateExtension = ".tpl";
-
     constructor(
         private readonly templateDir: string,
         private readonly targetDir: string,
@@ -31,10 +30,10 @@ export default class TemplateGenerator {
 
         await Promise.all((await ignoreWalk(tmpDir)).map(async file => {
             const stat = await fs.lstat(file);
-            if (stat.isFile() && file.endsWith(this.templateExtension)) {
+            if (stat.isFile() && file.endsWith(TEMPLATE_FILE_EXTENSION)) {
                 log.debug("Processing template file", file);
 
-                const resultantFilePath = file.slice(0, -this.templateExtension.length);
+                const resultantFilePath = file.slice(0, -TEMPLATE_FILE_EXTENSION.length);
                 await fs.writeFile(resultantFilePath, await templateFile(file, this.challengeContext));
 
                 log.debug("Generated", resultantFilePath, "and removing", file);

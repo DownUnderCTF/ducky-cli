@@ -1,5 +1,6 @@
 import { Command, Flags } from "@oclif/core";
 import * as chalk from "chalk";
+import { CHALLENGE_CONFIGURATION_FILE_NAME } from "../../config";
 import { OutputFormat, OUTPUT_FORMATS } from "../../ext/types";
 import Linter, { LintResult } from "../../services/challenge/linters/Linter";
 import { RuleLevel } from "../../services/challenge/linters/rules";
@@ -23,7 +24,7 @@ export default class LintCommand extends Command {
         directory: Flags.string({
             char: 'D',
             description: 'Challenge directory to lint',
-            default: async () => await findUpWith('ctfcli.yml', './'),
+            default: async () => await findUpWith(CHALLENGE_CONFIGURATION_FILE_NAME, './'),
         }),
         verbose: Flags.boolean({
             description: 'Verbose mode',

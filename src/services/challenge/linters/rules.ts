@@ -5,6 +5,7 @@ import * as fs from 'fs-extra';
 import { getCtfcliSpec, hasArtifact } from './helpers';
 import { CHALLENGE_CATEGORIES } from '../types';
 import { ignoreWalk } from '../../../util/fsutil';
+import { CHALLENGE_CONFIGURATION_FILE_NAME, DELETEME_FILE_NAME_FLAGS } from '../../../config';
 
 export type RuleLevel = 'notice' | 'warning' | 'error' | 'fatal';
 export type RuleDefinition = {
@@ -51,7 +52,7 @@ export function getRuleByCode(code: string): RuleDefinition | undefined {
 
 async function S000(challengeDir: string): Promise<string | null> {
     return await hasArtifact(
-        path.join(challengeDir, 'ctfcli.yml'),
+        path.join(challengeDir, CHALLENGE_CONFIGURATION_FILE_NAME),
         'file',
     );
 }
@@ -80,7 +81,10 @@ async function S003(challengeDir: string): Promise<string | null> {
 }
 
 async function S004(challengeDir: string): Promise<string | null> {
-    const toDelete = (await ignoreWalk(challengeDir)).filter(fpath => fpath.includes('DELETEME'));
+    const toDelete = (await ignoreWalk(challengeDir))
+        .filter(fpath => DELETEME_FILE_NAME_FLAGS.some(
+            flag => fpath.includes(flag),
+        ));
     return toDelete.length === 0 ? null : 'Found DELETEME(s): ' + toDelete.join(', ');
 }
 

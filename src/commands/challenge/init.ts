@@ -13,6 +13,7 @@ import {
     CHALLENGE_HOSTING_TYPE,
 } from "../../services/challenge/types";
 import { findUpRequired, findUpWith } from "../../util/fsutil";
+import { TEMPLATE_FOLDER } from "../../config";
 
 export default class ChallengeInit extends Command {
     static description = "Bootstrap and initialize a challenge";
@@ -73,7 +74,7 @@ export default class ChallengeInit extends Command {
         template: Flags.string({
             char: "T",
             description: "Directory to use as a template",
-            default: async () => await findUpRequired(".template"),
+            default: async () => await findUpRequired(TEMPLATE_FOLDER),
         }),
     };
 
