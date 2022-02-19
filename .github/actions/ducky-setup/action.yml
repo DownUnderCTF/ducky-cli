@@ -1,0 +1,18 @@
+name: Ducky Setup
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+        cache: 'yarn'
+        registry-url: 'https://registry.npmjs.org'
+    - run: yarn install --frozen-lockfile
+      shell: bash
+    - run: yarn build
+      shell: bash
+    - run: mkdir -p .template
+      shell: bash
+    - run: yarn oclif manifest
+      shell: bash

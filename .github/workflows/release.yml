@@ -1,0 +1,25 @@
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release-static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/ducky-setup
+      - run: yarn pkg-all
+      - uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          files: ./distbin/*
+  release-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/ducky-setup
+      - run: yarn publish --non-interactive --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
