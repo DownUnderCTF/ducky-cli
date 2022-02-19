@@ -1,9 +1,10 @@
 {
   "extends": [
-    "oclif-typescript"
+    "oclif-typescript",
+    "prettier"
   ],
   "rules": {
-    "indent": [2, 4],
     "semi": [2, "always"],
+    "max-len": [2, {"code": 108}]
   }
 }

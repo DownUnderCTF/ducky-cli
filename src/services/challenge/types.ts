@@ -28,13 +28,13 @@ export type ChallengeSetupInfo = {
 };
 
 export type ChallengeDescriptor = {
-    version: '0.1',
-    id: string,
-    name: string,
-    category: ChallengeCategory,
-    description: string,
-    connection_info?: string,
-    tags: string[],
-    files?: string[],
-    flags: string[],
+    version: "0.1";
+    id: string;
+    name: string;
+    category: ChallengeCategory;
+    description: string;
+    connection_info?: string;
+    tags: string[];
+    files?: string[];
+    flags: string[];
 };

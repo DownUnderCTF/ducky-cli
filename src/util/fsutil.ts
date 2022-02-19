@@ -11,7 +11,10 @@ import { IGNORE_FILES } from "../config";
  * @param start the directory to start searching from
  * @returns Path to ancestor and path or null if nothing can be found
  */
-async function findUp(name: string, start: string = process.cwd()): Promise<string | null> {
+async function findUp(
+    name: string,
+    start: string = process.cwd()
+): Promise<string | null> {
     const parent = path.dirname(start);
 
     if (start === parent) return null;
@@ -20,23 +23,32 @@ async function findUp(name: string, start: string = process.cwd()): Promise<stri
     return (await fs.pathExists(target)) ? target : findUp(name, parent);
 }
 
-export async function findUpWith(name: string, defaultPath?: string): Promise<string> {
+export async function findUpWith(
+    name: string,
+    defaultPath?: string
+): Promise<string> {
     const up = await findUp(name);
     const containingPath = up ? path.join(up, "../") : defaultPath;
-    if (!containingPath) throw new Error(`Could not find a ancestor path containing ${name}`);
+    if (!containingPath)
+        throw new Error(`Could not find a ancestor path containing ${name}`);
     return containingPath;
 }
 
 export async function findUpRequired(name: string): Promise<string> {
     const up = await findUp(name);
-    if (!up) throw new Error(`Could not find a ancestor path containing ${name}`);
+    if (!up)
+        throw new Error(`Could not find a ancestor path containing ${name}`);
     return up;
 }
 
 export async function ignoreWalk(root: string): Promise<string[]> {
-    return (await walk({
-        path: root,
-        ignoreFiles: IGNORE_FILES,
-        includeEmpty: true,
-    })).filter(f => !f.startsWith(".git")).map(file => path.resolve(root, file));
+    return (
+        await walk({
+            path: root,
+            ignoreFiles: IGNORE_FILES,
+            includeEmpty: true,
+        })
+    )
+        .filter((f) => !f.startsWith(".git"))
+        .map((file) => path.resolve(root, file));
 }

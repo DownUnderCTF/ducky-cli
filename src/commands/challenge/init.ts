@@ -62,7 +62,8 @@ export default class ChallengeInit extends Command {
         }),
         type: Flags.enum<ChallengeHostingType>({
             char: "t",
-            description: "Type of hosting required (none - description only, tcp, http)",
+            description:
+                "Type of hosting required (none - description only, tcp, http)",
             options: [...CHALLENGE_HOSTING_TYPE],
             default: "http",
         }),
@@ -81,7 +82,16 @@ export default class ChallengeInit extends Command {
     async run(): Promise<void> {
         const { flags } = await inquiredParse.bind(this)(ChallengeInit);
 
-        const { dir: rootDir, template: templateDir, id, category, name, author, difficulty, type } = flags;
+        const {
+            dir: rootDir,
+            template: templateDir,
+            id,
+            category,
+            name,
+            author,
+            difficulty,
+            type,
+        } = flags;
         const targetDir = path.join(rootDir, category, name);
 
         this.debug("Creating a new challenge", { flags });

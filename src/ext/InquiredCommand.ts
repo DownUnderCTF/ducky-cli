@@ -4,7 +4,8 @@ import * as inquirer from "inquirer";
 
 type CommandClass = typeof Command;
 type QuestionOpts<T> = Partial<inquirer.DistinctQuestion<T>>;
-export interface InquiredCommand<T extends inquirer.Answers = inquirer.Answers> extends CommandClass {
+export interface InquiredCommand<T extends inquirer.Answers = inquirer.Answers>
+    extends CommandClass {
     inquiredFlags: { [k in keyof CommandClass["flags"]]: QuestionOpts<T> };
 }
 
@@ -35,7 +36,7 @@ export async function inquiredParse(
             ...getBaseOptions(cmd.flags[k]),
             ...v,
         })),
-        opts.flags,
+        opts.flags
     );
 
     return {
